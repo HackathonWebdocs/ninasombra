@@ -1,0 +1,41 @@
+// =================================
+// Color palette
+// =================================
+
+// Generic colors
+$blue                         : #288ad6;
+$green                        : #16c98d;
+$red                          : #fa5e5b;
+$yellow                       : #feef6d;
+$orange                       : #e67e22;
+$pink                         : #ff708e;
+$purple                       : #8e44ad;
+$gray                         : #95a5a6;
+
+
+// Color Scheme
+$color-primary                : black;
+
+$color-secondary              : grey;
+$color-highlight              : white;
+
+
+// Common colors
+$color-text                   : $color-primary;
+$color-bg                     : white;
+$color-border                 : #ddd;
+
+// Text Selection
+$color-selection              : #fff;
+$color-selection-bg           :$color-secondary;
+
+
+// Links
+$color-link-default           :$color-secondary;
+$color-link-visited           :$color-secondary;
+$color-link-hover             : darken($color-secondary, 20%);
+$color-link-active            : darken($color-secondary, 20%);
+
+
+// <hr> border color
+$hr-border                    : lighten(#000, 70%);
