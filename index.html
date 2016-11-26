@@ -67,53 +67,36 @@
 
 				<script src="/assets/dist/js/libs/modernizr.min.js"></script>
 
+
 	</head>
 	<body>
-		<div class='curtain'><div class="loader"></div></div>
-
-			<div id="mainContent" class="main" role="main">
-				
-				<section class="intro" data-name="#home">
-				</section>
-			</div><!-- Close container -->
-
-										<footer>
-											<div class="logos-footer">
-
-												<ul class="footer-list labs is-hidden">
-													<li><a href="/labs/#home" href="javascript:history.go(0)">home</a></li>
-													<li><a href="/labs/#labs" href="javascript:history.go(0)">labs</a></li>
-													<li><a href="/labs/#tools" href="javascript:history.go(0)">tools</a></li>
-													<li><a href="/labs/#ideas" href="javascript:history.go(0)">ideas</a></li>
-												</ul>
-											</div>
-											<div class="end-line">
-												<span class="line"></span>
-												<h3 data-translatable >© 2016 Fabz Off Algunos derechos Reservados // © 2016 Fabz Off Algunos derechos Reservados</h3>
-											</div>
-											<div class="footer-bg"></div>
-										</footer>
-
+		<div class='curtain'>
+			<div class="loader"></div>
 		</div>
 
-				<header class="masthead" role="banner">
-					<div class="menu-lang">
-						<a class='lang-btn active' lang='es' >ES</a>
-						<a class='lang-btn' lang='en' >EN</a>
+		<div id="mainContent" class="main" role="main">
+
+				<div id='audioPlayer'></div>
+					<div id="viz">
+						<canvas id="analyser"></canvas>
 					</div>
 
-					<a class="header-logo" href='/'>
-						<img class="logo-header" src="../assets/img/header.svg" alt="no_header">
-					</a>
+				<section class="intro" data-name="#home">
+		<!-- 			<div id="viz">
+						<canvas id="analyser"></canvas>
+					</div> -->
+						<!-- <canvas id="wavedisplay" width="1024" height="500"></canvas> -->
 
-					<div class="site-menu">
-						<a class='menu-btn'  href='/' >HOME</a>
-						<a class='menu-btn' href='/section/' >SECTION</a>
-					</div>
+				<div id="controls">
+					<img id="record" src="../assets/img/headphones.svg" onclick="toggleRecording(this);">
 
-				</header>
+					<img class="logo-header" src="../assets/img/microphone.svg" alt="no_header">
 
-
+					<a id="save" href="#"><img src="../assets/img/save.svg"></a>
+				</div>
+				</section>
+			</div><!-- Close container -->
+		</div>
 		<!-- JavaScript -->
 		<script src="/assets/dist/js/script.js"></script>
 		<script>

@@ -2,7 +2,6 @@
  * Author:
  * Fabz
  */
-
 // require("./libs/skrollr");
 // require("./libs/picturefill");
 
@@ -10,18 +9,18 @@
 ;(function(FBZ, $) {
 
 		$(window).load(function() {
-
 		});
-
 
 	$(function() {
 
 		// initial functions 
-		FBZ.control.readFromGoogleDocs();
+		// console.log("init");
+		// FBZ.control.readFromGoogleDocs();
 		FBZ.control.determineSection();
 		FBZ.control.onResizeStage();
 		FBZ.control.defineStage();
 		FBZ.control.resizeContentBlock();
+
 
 	});// END DOC READY
 	
@@ -58,13 +57,21 @@
 		$main				:$('.main'),
 		$block				:$('.block'),
 		$langBtn			:$('.lang-btn'),
-		$footer				:$('footer')
+		$footer				:$('footer'),
+		audioPlayer 		: document.querySele("audio");
+
 	};
 
 	FBZ.control = {
 		// add function here
 		init : function () {
 			console.debug('FabzOff is running');
+			// FBZ.control.multilingualEngine(); 
+			FBZ.control.removeLoadingCurtain();
+			FBZ.control.determineSection();
+			FBZ.control.onResizeStage();
+			FBZ.control.defineStage();
+			FBZ.control.resizeContentBlock();
 		},
 
 		detectPlatform : function () {
@@ -152,14 +159,14 @@
 					element.addClass("is-hidden");
 				}, time);
 		},
-		parseBrain : function () {
+		// parseBrain : function () {
 
-			// triggers the init func
-			FBZ.control.init();
-			FBZ.control.multilingualEngine(); 
-			FBZ.control.removeLoadingCurtain();
-			//FBZ.control.updateLanguage();
-		},
+		// 	// triggers the init func
+		// 	FBZ.control.init();
+		// 	FBZ.control.multilingualEngine(); 
+		// 	FBZ.control.removeLoadingCurtain();
+		// 	//FBZ.control.updateLanguage();
+		// },
 
 		fadeHide : function (el) { 
 
@@ -183,17 +190,17 @@
 		},
 
 
-		readFromGoogleDocs : function () { 
+		// readFromGoogleDocs : function () { 
 
-			// https://docs.google.com/spreadsheets/d/1T0qB23t_Lc17VrtnybisyjVsfufbM3trJ9QGNjJUspo/pubhtml
+		// 	// https://docs.google.com/spreadsheets/d/1T0qB23t_Lc17VrtnybisyjVsfufbM3trJ9QGNjJUspo/pubhtml
 
-			Tabletop.init( { key: 'https://docs.google.com/spreadsheets/d/1T0qB23t_Lc17VrtnybisyjVsfufbM3trJ9QGNjJUspo/pubhtml',
-				callback: function(data, tabletop) { 
-					console.dir(data) 
-					FBZ.model.noBrain = data;
-					FBZ.control.parseBrain();
-				} } )
-		},
+		// 	Tabletop.init( { key: 'https://docs.google.com/spreadsheets/d/1T0qB23t_Lc17VrtnybisyjVsfufbM3trJ9QGNjJUspo/pubhtml',
+		// 		callback: function(data, tabletop) { 
+		// 			console.dir(data) 
+		// 			FBZ.model.noBrain = data;
+		// 			FBZ.control.parseBrain();
+		// 		} } )
+		// },
 
 		multilingualEngine : function () {
 
@@ -259,6 +266,10 @@
 
 		},
 
+		audiotrigger : function () {
+
+		}
+
 		// function to trigger when you resize stage
 		onResizeStage : function ()  { 
 
@@ -267,7 +278,7 @@
 				FBZ.control.defineStage();
 				FBZ.control.resizeContentBlock();
 
-			}.debounce(150));
+			});
 
 		},
 
@@ -306,6 +317,8 @@
 		}
 	};
 	*/
+
+	FBZ.control.init();
 
 })(window.FBZ = window.FBZ || {}, jQuery);
 

@@ -2,22 +2,36 @@
 	<head>
 		<title>Sitename</title>
 		<!--(bake /includes/head.html)-->
+
 	</head>
 	<body>
-		<div class='curtain'><div class="loader"></div></div>
-
-			<div id="mainContent" class="main" role="main">
-				
-				<section class="intro" data-name="#home">
-				</section>
-			</div><!-- Close container -->
-
-			<!--(bake /includes/footer.html)-->
-
+		<div class='curtain'>
+			<div class="loader"></div>
 		</div>
 
-		<!--(bake /includes/header.html)-->
+		<div id="mainContent" class="main" role="main">
 
+				<div id='audioPlayer'></div>
+					<div id="viz">
+						<canvas id="analyser"></canvas>
+					</div>
+
+				<section class="intro" data-name="#home">
+		<!-- 			<div id="viz">
+						<canvas id="analyser"></canvas>
+					</div> -->
+						<!-- <canvas id="wavedisplay" width="1024" height="500"></canvas> -->
+
+				<div id="controls">
+					<img id="record" src="../assets/img/headphones.svg" onclick="toggleRecording(this);">
+
+					<img class="logo-header" src="../assets/img/microphone.svg" alt="no_header">
+
+					<a id="save" href="#"><img src="../assets/img/save.svg"></a>
+				</div>
+				</section>
+			</div><!-- Close container -->
+		</div>
 		<!-- JavaScript -->
 		<script src="/assets/dist/js/script.js"></script>
 		<!--(bake /includes/analytics.html)-->

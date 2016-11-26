@@ -52,9 +52,11 @@ module.exports = {
 			'<%=config.srcDir%>/js/libs/picturefill.js',
 			'<%=config.srcDir%>/js/libs/tabletop.js',
 			'<%=config.srcDir%>/js/libs/tweenlite.js',
+			'<%=config.srcDir%>/js/libs/recorderWorker.js',
+			'<%=config.srcDir%>/js/libs/audiodisplay.js',
+			'<%=config.srcDir%>/js/libs/recorder.js',
+			'<%=config.srcDir%>/js/libs/main.js',
 			'<%=config.srcDir%>/js/script.js',
-
-
 		]
 	},
 
