@@ -16,11 +16,8 @@
 		// initial functions 
 		// console.log("init");
 		// FBZ.control.readFromGoogleDocs();
-		FBZ.control.determineSection();
-		FBZ.control.onResizeStage();
-		FBZ.control.defineStage();
-		FBZ.control.resizeContentBlock();
 
+			FBZ.control.init();
 
 	});// END DOC READY
 	
@@ -47,8 +44,9 @@
 		swapToMobileBreakpoint:420,
 		swapToTabletBreakpoint:1024,
 		audiosBasePath:"../assets/audio/",
-		audios:["elephant.mp3"],
-
+		audios:["elephant.mp3","elephant.mp3","elephant.mp3"],
+		videosBasePath:"../assets/video/",
+		videos:["Intro_Ojocolores_01.mp4"],
 	};
 
 	FBZ.view = {
@@ -61,6 +59,12 @@
 		$langBtn			:$('.lang-btn'),
 		$footer				:$('footer'),
 		$audioPlayer		:$(".audioPlayer"),
+		$videoPlayer		:$("video"),
+		$headphones 		:$(".headphones-container"),
+		$logo 				:$(".logo-container"),
+		$analyzer			:$("#viz"),
+		$whiteBg			:$(".white-bg"),
+
 	};
 
 	FBZ.control = {
@@ -74,17 +78,76 @@
 			FBZ.control.defineStage();
 			FBZ.control.resizeContentBlock();
 			FBZ.control.displayHeadphones();
+			// FBZ.control.playVideo(1,FBZ.control.videoEnded);
+			FBZ.control.playVideo(0,"loop");
+
 		},
+
 
 		displayHeadphones: function () {
-			FBZ.control.playSound(0,FBZ.control.audioEnded);
+
+			// FBZ.control.playSound(0,FBZ.control.audioEnded);
+			// FBZ.control.playVideo(1,FBZ.control.videoEnded);
+			// FBZ.control.playVideo(1,"loop");
+			FBZ.control.show(FBZ.view.$headphones);
+
+			var tween = TweenLite.to(FBZ.view.$headphones, 3, {opacity:1,scale:1.4, onComplete:FBZ.control.hideHeadphones })
+			// FBZ.control.playSound(0,FBZ.control.audioEnded);
+		},
+		hideHeadphones : function () { 
+			FBZ.control.blurLong(FBZ.view.$headphones);
+			var tween2 = TweenLite.to(FBZ.view.$headphones, 3, {opacity:0, delay: 3, onComplete:FBZ.control.displayLogo})
 		},
 
+		displayLogo : function () {
+
+			FBZ.control.hide(FBZ.view.$headphones);
+			FBZ.control.show(FBZ.view.$logo);
+			var tween2 = TweenLite.to(FBZ.view.$logo, 3, {opacity:1, scale:1.4,onComplete:FBZ.control.hideLogo})
+		},
+
+		hideLogo : function () { 
+
+			FBZ.control.blurLong(FBZ.view.$logo);
+			var tween = TweenLite.to(FBZ.view.$logo, 1, {opacity:0, delay: 3, onComplete:FBZ.control.displayActOneInstructions})
+		},
+
+
+		displayActOneInstructions : function () {
+
+			FBZ.control.hide(FBZ.view.$logo);
+			FBZ.control.show(FBZ.view.$whiteBg);
+			FBZ.control.show(FBZ.view.$analyzer);
+			var tween = TweenLite.to(FBZ.view.$whiteBg, 1, {opacity:.6})
+			// FBZ.control.playSound(0,FBZ.control.audioEnded);
+
+		},
+
+
 		playSound : function (index,endedFunction) {
-			FBZ.view.$audioPlayer.attr("src",FBZ.model.audiosBasePath+FBZ.model.audios[0]);
+			FBZ.view.$audioPlayer.find("source").attr("src",FBZ.model.audiosBasePath+FBZ.model.audios[index]);
 			// console.dir(FBZ.view.$audioPlayer);
 			FBZ.view.$audioPlayer[0].play();
 			FBZ.view.$audioPlayer[0].addEventListener("ended", endedFunction);
+		},
+
+		playVideo : function (index,endedFunction) {
+
+			if ( endedFunction === "loop") {
+				FBZ.view.$videoPlayer.attr("loop","loop");
+			}else {
+				if(	FBZ.view.$videoPlayer[0].hasAttribute("loop") ) {
+					FBZ.view.$videosPlayer.removeAtrib("loop");
+				}
+					FBZ.view.$videoPlayer[0].addEventListener('ended', endedFunction, false);
+			}
+
+			FBZ.view.$videoPlayer.attr("src",FBZ.model.videosBasePath+FBZ.model.videos[index]);
+
+		},
+
+		videoEnded : function () {
+			console.log("video ended");
 		},
 
 		audioEnded : function () {
@@ -124,7 +187,7 @@
 		},
 
 		removeLoadingCurtain : function() { 
-			FBZ.control.fadeHide($(".curtain"));
+			FBZ.control.fadeHideLong($(".curtain"));
 		},
 
 		determineSection : function () { 
@@ -185,6 +248,29 @@
 		// 	//FBZ.control.updateLanguage();
 		// },
 
+		blurLong : function (el) { 
+
+			el.addClass("is-blurring-out");
+
+			setTimeout(function(){ 
+				el.addClass("is-hidden");
+				el.removeClass("is-blurring-out");
+			}, 5001);
+		},
+
+
+
+
+		fadeHideLong : function (el) { 
+
+			el.addClass("is-fading-out-long");
+
+			setTimeout(function(){ 
+				el.addClass("is-hidden");
+				el.removeClass("is-fading-out-long");
+			}, 5001);
+		},
+
 		fadeHide : function (el) { 
 
 			el.addClass("is-fading-out");
@@ -194,6 +280,17 @@
 				el.removeClass("is-fading-out");
 			}, 701);
 		},
+
+		hide : function (el) { 
+
+				el.addClass("is-hidden");
+		},
+
+		show : function (el) { 
+
+			el.removeClass("is-hidden");
+		},
+
 
 		fadeShow : function (el) { 
 
@@ -206,19 +303,18 @@
 			}, 701);
 		},
 
+		fadeShowLong : function (el) { 
 
-		// readFromGoogleDocs : function () { 
+			el.addClass("is-fading-in-long");
+			el.removeClass("is-hidden");
 
-		// 	// https://docs.google.com/spreadsheets/d/1T0qB23t_Lc17VrtnybisyjVsfufbM3trJ9QGNjJUspo/pubhtml
+			setTimeout(function(){ 
 
-		// 	Tabletop.init( { key: 'https://docs.google.com/spreadsheets/d/1T0qB23t_Lc17VrtnybisyjVsfufbM3trJ9QGNjJUspo/pubhtml',
-		// 		callback: function(data, tabletop) { 
-		// 			console.dir(data) 
-		// 			FBZ.model.noBrain = data;
-		// 			FBZ.control.parseBrain();
-		// 		} } )
-		// },
+				el.removeClass("is-fading-in-long");
+			}, 701);
+		},
 
+	
 		multilingualEngine : function () {
 
 			// multilingual plugin config . 
@@ -331,7 +427,6 @@
 	};
 	*/
 
-	FBZ.control.init();
 
 })(window.FBZ = window.FBZ || {}, jQuery);
 

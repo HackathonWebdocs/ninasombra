@@ -14,9 +14,19 @@
 // $bp-mid               : 768;  // Set in px
 // $bp-wide              : 992;  // Set in px
 // $bp-huge              : 1600; // Set in px
- 
-/// footer
- 
+// footer 
+
+.white-bg {
+	opacity:0;
+	background:#FFF;
+	top:0;
+	left:0;
+	width:100vw;
+	height:100vh;
+	position:absolute;
+}
+
+
 footer {
 
 	// UNCOMENT THIS TO MAKE THE FOOTER VISIBLE
@@ -109,6 +119,7 @@ header {
 .loader:after {
   border-radius: 50%;
   top:50%;
+  display: none;
  }
 .loader:before,
 .loader:after {
@@ -123,7 +134,7 @@ header {
   top: -0.1em;
   left: -0.1em;
   transform-origin: 5.2em 5.1em;
-  animation: load2 2s infinite ease 1.5s;
+  animation: load2 10s infinite ease 15s;
 }
 .loader {
 
@@ -140,6 +151,7 @@ header {
 }
 
 .loader:after {
+
   width: 5.2em;
   height: 10.2em;
   background: $color-primary;
@@ -196,6 +208,23 @@ header {
 	transition: all 700ms ease-out;
 	opacity:0;
 }
+
+.is-fading-out-long { 
+
+	transition: all 5000ms ease-out;
+	opacity:0;
+}
+
+
+.is-fading-in-long { 
+
+	animation: animFadeIn 700ms ease-out;
+	animation-fill-mode: forwards;
+	backface-visibility: hidden;
+}
+
+
+
 .is-fading-in { 
 
 	animation: animFadeIn 700ms ease-out;
@@ -207,6 +236,23 @@ header {
 @keyframes animFadeIn {
 	0%   {opacity:0;  }
 	100% {opacity:1; }
+}
+
+
+
+.is-blurring-out { 
+
+	animation: blurOut 3s ease-out;
+	animation-fill-mode: forwards;
+	backface-visibility: hidden;
+	animation-delay: 3s;
+}
+
+
+/*   fade in */
+@keyframes blurOut {
+	0%   {filter: blur(0px);  }
+	100% {filter: blur(50px); }
 }
 
 /*   fade in */
@@ -246,32 +292,41 @@ header {
 // 	}
 
 
-canvas { 
+#analiser { 
+	
 		display: inline-block; 
-		background: #202020; 
+		background: rgba(255,255,255,0.6); 
 		width: 100vw;
-		height: 25%;
-		box-shadow: 0px 0px 10px blue;
+		height:100vh;
+		top:0;
+		left: 0;
+		position: absolute;
 }
+
+
+
+
 
 .video-responsive {
 	width: 100vw;
 	height:100vh;
+	top: 0;
+	left: 0;
+	
+  //   width: 200%;
+  //   height: 200%;
 }
 
 .canvas, 
 .video {
-	height: 100%;
-	left: 0;
+	min-width:100vw;
+	min-height: 100vh;
 	position: absolute;
-	top: 0;
-	width: 100%;
 	background:transparent;
-	// z-index: 5;
-	background-size: cover;
-	min-height: 100%;
+	margin-left: auto;
+    margin-right: auto;
+    display: block;
 }
-
 
 
 
@@ -327,10 +382,24 @@ canvas {
 	left:50%;
 	transform:translateY(-50%) translateX(-50%);
 	margin: 0 auto;
+	opacity:0;
 	img {
-		width:30vw;
+		width:40vw;
 	}
 }
 
+// logo 
+
+.logo-container {
+	position:absolute;
+	top:50%;
+	left:50%;
+	transform:translateY(-50%) translateX(-50%);
+	margin: 0 auto;
+	opacity:0;
+	img {
+		width:40vw;
+	}
+}
 
 

@@ -70,32 +70,39 @@
 
 	</head>
 	<body>
-		<div class='curtain'>
-			<div class="loader"></div>
-		</div>
+		<div class='curtain'>		</div>
 
 		<div id="mainContent" class="main" role="main">
 
+			<audio class='audioPlayer'></audio>
+
+
+
+			<!-- <div id="viz"> -->
+					
+			<!-- </div> -->
+
 
 			<div class="video-responsive">
-					<video class="video" muted="muted" loop="loop" autoplay="autoplay">
-					<source  src="../assets/video/littlegirleyes.mp4" type="video/mp4">
-					Your browser does not support HTML5 video.
+				<video class="video" autoplay="autoplay">
+					<source  src="" type="video/mp4">
 				</video>
 				<canvas class="canvas"></canvas>
 			</div>
 
+				<div class="logo-container is-hidden">
+					<img src="../assets/img/logo.svg">
+				</div>
 
-				<div class="headphones-container">
+				<div class="headphones-container is-hidden">
 					<img src="../assets/img/headphones.svg">
 				</div>
-				<audio class='audioPlayer'></audio>
 
 
-				<div id="viz">
-					<canvas id="analyser"></canvas>
-				</div>
 
+				<div class="white-bg is-hidden"> </div>
+
+				<canvas id="analyser"></canvas>
 				<section class="intro" data-name="#home">
 		<!-- 			<div id="viz">
 						<canvas id="analyser"></canvas>
@@ -109,11 +116,6 @@
 
 					<a id="save" href="#"><img src="../assets/img/save.svg"></a>
 				</div>
-
-
-
-
-
 
 
 				</section>
