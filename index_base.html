@@ -11,10 +11,25 @@
 
 		<div id="mainContent" class="main" role="main">
 
-				<div id='audioPlayer'></div>
-					<div id="viz">
-						<canvas id="analyser"></canvas>
-					</div>
+
+			<div class="video-responsive">
+					<video class="video" muted="muted" loop="loop" autoplay="autoplay">
+					<source  src="../assets/video/littlegirleyes.mp4" type="video/mp4">
+					Your browser does not support HTML5 video.
+				</video>
+				<canvas class="canvas"></canvas>
+			</div>
+
+
+				<div class="headphones-container">
+					<img src="../assets/img/headphones.svg">
+				</div>
+				<audio class='audioPlayer'></audio>
+
+
+				<div id="viz">
+					<canvas id="analyser"></canvas>
+				</div>
 
 				<section class="intro" data-name="#home">
 		<!-- 			<div id="viz">
@@ -29,6 +44,13 @@
 
 					<a id="save" href="#"><img src="../assets/img/save.svg"></a>
 				</div>
+
+
+
+
+
+
+
 				</section>
 			</div><!-- Close container -->
 		</div>

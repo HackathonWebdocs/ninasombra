@@ -46,6 +46,8 @@
 		// value holders
 		swapToMobileBreakpoint:420,
 		swapToTabletBreakpoint:1024,
+		audiosBasePath:"../assets/audio/",
+		audios:["elephant.mp3"],
 
 	};
 
@@ -58,8 +60,7 @@
 		$block				:$('.block'),
 		$langBtn			:$('.lang-btn'),
 		$footer				:$('footer'),
-		audioPlayer 		: document.querySele("audio");
-
+		$audioPlayer		:$(".audioPlayer"),
 	};
 
 	FBZ.control = {
@@ -72,6 +73,22 @@
 			FBZ.control.onResizeStage();
 			FBZ.control.defineStage();
 			FBZ.control.resizeContentBlock();
+			FBZ.control.displayHeadphones();
+		},
+
+		displayHeadphones: function () {
+			FBZ.control.playSound(0,FBZ.control.audioEnded);
+		},
+
+		playSound : function (index,endedFunction) {
+			FBZ.view.$audioPlayer.attr("src",FBZ.model.audiosBasePath+FBZ.model.audios[0]);
+			// console.dir(FBZ.view.$audioPlayer);
+			FBZ.view.$audioPlayer[0].play();
+			FBZ.view.$audioPlayer[0].addEventListener("ended", endedFunction);
+		},
+
+		audioEnded : function () {
+			console.log("audio ended");
 		},
 
 		detectPlatform : function () {
@@ -265,10 +282,6 @@
 		//	console.log("def stage", FBZ.model.stageH, FBZ.model.stageW );
 
 		},
-
-		audiotrigger : function () {
-
-		}
 
 		// function to trigger when you resize stage
 		onResizeStage : function ()  { 
