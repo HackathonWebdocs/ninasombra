@@ -291,6 +291,17 @@ header {
 // 		margin: 0 0;
 // 	}
 
+.clicker {
+
+	position:absolute;
+	width:10vw;
+	height:10vh;
+	z-index:100;
+	background:#000;
+	opacity:0.7;
+}
+
+
 #analyser { 
 	opacity:0;
 	display: inline-block; 
