@@ -46,9 +46,11 @@
 		audiosBasePath:"../assets/audio/",
 		audios:["narrador_1.mp3","narrador_2.mp3","narrador_3.mp3","narrador_4.mp3","narrador_5.mp3","narrador_6.mp3","narrador_7.mp3","narrador_8.mp3","narrador_9.mp3","narrador_10.mp3","narrador_11.mp3","click.mp3"],
 		videosBasePath:"../assets/video/",
-		videos:["Intro_Ojocolores_01.mp4","Acto2_Elcolordelaceguera.mp4","Acto2_Queesunaimagen.mp4","Acto2_Comovenelmundo_03.mp4"],
+		// videos:["Intro_Ojocolores_01.mp4","Acto2_Elcolordelaceguera.mp4","Acto2_Queesunaimagen.mp4","Acto2_Comovenelmundo_03.mp4"],
+		videos:["Intro_Ojocolores_01.mp4","Intro_Ojocolores_01.mp4","Intro_Ojocolores_01.mp4","Intro_Ojocolores_01.mp4"],
 		playedQuestions : 0,
 		totalQuestions : 3,
+		selectedPath : 0,
 	};
 
 	FBZ.view = {
@@ -118,7 +120,7 @@
 
 		displayVideo1Instructions : function () {
 
-
+			console.log("displayVideo1Instructions");
 			FBZ.control.hide(FBZ.view.$logo);
 			FBZ.control.show(FBZ.view.$whiteBg);
 			FBZ.control.show(FBZ.view.$analyser);
@@ -129,12 +131,21 @@
 		},
 
 		displayVideo1Instructions2 : function () {
+			console.log("displayVideo1Instructions2");
+			FBZ.view.$audioPlayer[0].removeEventListener("ended", FBZ.control.displayVideo1Instructions2);
+			var tween = TweenLite.to(FBZ.view.$whiteBg, 1, {opacity:.6})
+			var tween = TweenLite.to(FBZ.view.$analyser, 1, {opacity:1})
 			FBZ.control.playSound(3,FBZ.control.hideVideo1Instructions);
+			FBZ.view.$videoPlayer[0].pause();
 		},
 
 		hideVideo1Instructions : function () {
 
-			FBZ.control.blurLong(FBZ.view.$analyser);
+			FBZ.view.$audioPlayer[0].removeEventListener("ended", FBZ.control.hideVideo1Instructions);
+//			FBZ.control.playSound(3,FBZ.control.hideVideo1Instructions);
+
+			console.log("hideVideo1Instructions");
+			// FBZ.control.blurLong(FBZ.view.$analyser);
 			var tween = TweenLite.to(FBZ.view.$whiteBg, 1, {opacity:1})
 			// var tween2 = TweenLite.to(FBZ.view.$analyser, 2, {opacity:0,onComplete:FBZ.control.hide, onCompleteParams:FBZ.view.$analyser})
 			var tween2 = TweenLite.to(FBZ.view.$analyser, 2, {opacity:0,opacity:0,onComplete:FBZ.control.generateRandomClicker })
@@ -157,6 +168,8 @@
 
 		randomlyPositionClicker : function () {
 
+			console.log("randomlyPositionClicker");
+
 			FBZ.view.$clicker.each(function( index, element ) {
     
 			$(element).css("top", Math.round(Math.random()*90)+"%");
@@ -167,133 +180,93 @@
 
 			FBZ.view.$clicker.on("mouseover",FBZ.control.onClickerOver); 
 
-
 		},
 
 		onClickerOver : function (e) {
 
-			var selectedPath  = e.currentTarget.getAttribute("data");
-			FBZ.view.$clicker.off("mouseover"); 
+			FBZ.model.selectedPath  = Number( e.currentTarget.getAttribute("data"));
+			FBZ.view.$clicker.off("mouseover",FBZ.control.onClickerOver); 
 
-			console.log("clicOver",selectedPath);
+			console.log("clicOver",FBZ.model.selectedPath);
 			// FBZ.control.playSound(11,FBZ.control.audioEnded);
 			// e.currentTarget.getAttribute("data");
 			FBZ.control.hide(FBZ.view.$clicker);
 
-			switch (selectedPath) {
-				case "1":
+			switch (FBZ.model.selectedPath) {
+				case 1:
 					console.log("case 1 ");
 					FBZ.view.$c1.remove();
-					FBZ.control.displayQuestion1();
-				case "2":
+					FBZ.control.displayQuestion();
+				break;
+				case 2:
 					console.log("case 2 ");
 
 					FBZ.view.$c2.remove();
-					FBZ.control.displayQuestion2();
 
 				break;
-				case "3":
+				case 3:
 					console.log("case 3 ");
 
 					FBZ.view.$c3.remove();
-					FBZ.control.displayQuestion3();
 
 				break;
 
 			}
-
+			FBZ.control.displayQuestion();
 		},
 
 		questionsCompletionCheck : function () {
 
-			console.log ("questionsCompletionCheck : " ,FBZ.model.playedQuestions , FBZ.model.totalQuestions ) 
+			FBZ.model.playedQuestions ++ ; 
+
 			if (FBZ.model.playedQuestions < FBZ.model.totalQuestions) {
-				FBZ.model.playedQuestions ++ ; 
-				FBZ.control.displayVideo2Instructions();
+				FBZ.control.displayVideo1Instructions2();
 
 			} else {
 				FBZ.control.displayAct3();
+
 			}
+			console.log ("questionsCompletionCheck : " ,FBZ.model.playedQuestions , FBZ.model.totalQuestions ) 
 		},
+
+
 
 //Video 1 Narrador: De qué color es la ceguera?
 
-		displayQuestion1 : function () {
-
+		displayQuestion : function () {
+			console.log("displayQuestion1");
 			var tween = TweenLite.to(FBZ.view.$whiteBg, 1, {opacity:.6});
 			var tween = TweenLite.to(FBZ.view.$analyser, 1, {opacity:1});
-			FBZ.control.playSound(4,FBZ.control.hideQuestion1);
+			FBZ.control.playSound(FBZ.model.selectedPath+3,FBZ.control.hideQuestion);
 		},
 
-		hideQuestion1 : function () {
+		hideQuestion : function () {
 
-			FBZ.control.blurLong(FBZ.view.$analyser);
+	 		FBZ.view.$audioPlayer[0].removeEventListener("ended", FBZ.control.hideQuestion);
+			console.log("hideQuestion1");
+
+			// FBZ.control.blurLong(FBZ.view.$analyser);
 			var tween = TweenLite.to(FBZ.view.$whiteBg, 1, {opacity:0});
 			// var tween2 = TweenLite.to(FBZ.view.$analyser, 2, {opacity:0,onComplete:FBZ.control.hide, onCompleteParams:FBZ.view.$analyser})
 			var tween2 = TweenLite.to(FBZ.view.$analyser, 2, {opacity:0});
 			// change to video act 2 . 
-			FBZ.control.playVideo(1,FBZ.control.endVideo1);
-
+			FBZ.control.playVideo(FBZ.model.selectedPath,FBZ.control.endVideo);
 		},
 
-		endVideo1 : function () {
+		endVideo : function () {
+
+			FBZ.view.$audioPlayer[0].removeEventListener("ended", FBZ.control.endVideo);
+			FBZ.view.$videoPlayer[0].pause();
+			// FBZ.control.videoEnded();
+			// FBZ.control.playVideo(0,"loop");
+
+			console.log("endVideo");
+
 			var tween = TweenLite.to(FBZ.view.$whiteBg, 1, {opacity:.6});
 			var tween = TweenLite.to(FBZ.view.$analyser, 1, {opacity:1,  onComplete:FBZ.control.questionsCompletionCheck});
 		},
 
 
-// Video 2  Narrador: Qué es para ti una imagen?
-
-
-		displayQuestion2 : function () {
-			
-			var tween = TweenLite.to(FBZ.view.$whiteBg, 0.5, {opacity:.6});
-			var tween = TweenLite.to(FBZ.view.$analyser, 0.5, {opacity:1});
-			FBZ.control.playSound(5,FBZ.control.hideQuestion2);
-		},
-
-		hideQuestion2 : function () {
-
-			FBZ.control.blurLong(FBZ.view.$analyser);
-			var tween = TweenLite.to(FBZ.view.$whiteBg, 1, {opacity:0});
-			// var tween2 = TweenLite.to(FBZ.view.$analyser, 2, {opacity:0,onComplete:FBZ.control.hide, onCompleteParams:FBZ.view.$analyser})
-			var tween2 = TweenLite.to(FBZ.view.$analyser, 2, {opacity:0});
-			// change to video act 2 . 
-			FBZ.control.playVideo(2,FBZ.control.endVideo2);
-
-		},
-
-		endVideo2 : function () {
-			var tween = TweenLite.to(FBZ.view.$whiteBg, 1, {opacity:.6});
-			var tween = TweenLite.to(FBZ.view.$analyser, 1, {opacity:1,  onComplete:FBZ.control.questionsCompletionCheck});
-		},
-
-
-// Video 3 Narradora: Cómo ven el mundo los ciegos?
-
-
-		displayQuestion3 : function () {
-			
-			var tween = TweenLite.to(FBZ.view.$whiteBg, 1, {opacity:.6});
-			var tween = TweenLite.to(FBZ.view.$analyser, 1, {opacity:1});
-			FBZ.control.playSound(6,FBZ.control.hideQuestion3);
-		},
-
-		hideQuestion3 : function () {
-
-			FBZ.control.blurLong(FBZ.view.$analyser);
-			var tween = TweenLite.to(FBZ.view.$whiteBg, 1, {opacity:0});
-			// var tween2 = TweenLite.to(FBZ.view.$analyser, 2, {opacity:0,onComplete:FBZ.control.hide, onCompleteParams:FBZ.view.$analyser})
-			var tween2 = TweenLite.to(FBZ.view.$analyser, 2, {opacity:0});
-			// change to video act 2 . 
-			FBZ.control.playVideo(3,FBZ.control.endVideo3);
-
-		},
-
-		endVideo3 : function () {
-			var tween = TweenLite.to(FBZ.view.$whiteBg, 1, {opacity:.6});
-			var tween = TweenLite.to(FBZ.view.$analyser, 1, {opacity:1,  onComplete:FBZ.control.questionsCompletionCheck});
-		},
 
 		displayAct3 : function () {
 			console.log("act 3");
@@ -308,7 +281,7 @@
 
 		 // old_element.parentNode.replaceChild(new_element, old_element);
 			// FBZ.view.$audioPlayer.off();
-			console.dir(FBZ.view.$audioPlayer);
+			console.log("playSound", index, endedFunction.name);
 
 			FBZ.view.$audioPlayer.attr("src",FBZ.model.audiosBasePath+FBZ.model.audios[index]);
 			// console.log("play Sound: ",FBZ.view.$audioPlayer,FBZ.model.audiosBasePath+FBZ.model.audios[index]);
@@ -329,20 +302,31 @@
 
 		playVideo : function (index,endedFunction) {
 
+			console.log("playVideo",index, endedFunction.name );
 			if ( endedFunction === "loop") {
 				FBZ.view.$videoPlayer.attr("loop","loop");
 			}else {
 				if(	FBZ.view.$videoPlayer[0].hasAttribute("loop") ) {
 					FBZ.view.$videoPlayer.removeAttr("loop");
 				}
+
 					FBZ.view.$videoPlayer[0].addEventListener('ended', endedFunction, false);
+					// FBZ.view.$videoPlayer[0].addEventListener('ended', FBZ.control.videoEnded, false);
 			}
 
 			FBZ.view.$videoPlayer.attr("src",FBZ.model.videosBasePath+FBZ.model.videos[index]);
 		},
 
 		videoEnded : function () {
-			console.log("video ended");
+			console.log("video ender function");
+			// var old_element = FBZ.view.$videoPlayer[0];
+			// var new_element = old_element.cloneNode(true);
+			// FBZ.view.$videoPlayer.replaceWith(new_element);
+			// FBZ.view.$videoPlayer[0].removeEventListener('ended', FBZ.control.endVideo1, false);
+			// FBZ.view.$videoPlayer[0].removeEventListener('ended', FBZ.control.endVideo2, false);
+			// FBZ.view.$videoPlayer[0].removeEventListener('ended', FBZ.control.endVideo3, false);
+
+
 		},
 
 		audioEnded : function () {
