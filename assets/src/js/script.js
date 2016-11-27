@@ -184,35 +184,41 @@
 
 		onClickerOver : function (e) {
 
-			FBZ.model.selectedPath  = Number( e.currentTarget.getAttribute("data"));
-			FBZ.view.$clicker.off("mouseover",FBZ.control.onClickerOver); 
-
 			console.log("clicOver",FBZ.model.selectedPath);
-			// FBZ.control.playSound(11,FBZ.control.audioEnded);
-			// e.currentTarget.getAttribute("data");
-			FBZ.control.hide(FBZ.view.$clicker);
+			FBZ.control.playSound(11,FBZ.control.audioEnded);
 
-			switch (FBZ.model.selectedPath) {
-				case 1:
-					console.log("case 1 ");
-					FBZ.view.$c1.remove();
+			setTimeout(function(){ 
+
+				FBZ.model.selectedPath  = Number( e.currentTarget.getAttribute("data"));
+				FBZ.view.$clicker.off("mouseover",FBZ.control.onClickerOver); 
+
+				// e.currentTarget.getAttribute("data");
+				FBZ.control.hide(FBZ.view.$clicker);
+
+				switch (FBZ.model.selectedPath) {
+					case 1:
+						console.log("case 1 ");
+						FBZ.view.$c1.remove();
+						FBZ.control.displayQuestion();
+					break;
+					case 2:
+						console.log("case 2 ");
+
+						FBZ.view.$c2.remove();
+
+					break;
+					case 3:
+						console.log("case 3 ");
+
+						FBZ.view.$c3.remove();
+
+					break;
+
+					}
 					FBZ.control.displayQuestion();
-				break;
-				case 2:
-					console.log("case 2 ");
 
-					FBZ.view.$c2.remove();
 
-				break;
-				case 3:
-					console.log("case 3 ");
-
-					FBZ.view.$c3.remove();
-
-				break;
-
-			}
-			FBZ.control.displayQuestion();
+					}, 1000);
 		},
 
 		questionsCompletionCheck : function () {
@@ -325,8 +331,6 @@
 			// FBZ.view.$videoPlayer[0].removeEventListener('ended', FBZ.control.endVideo1, false);
 			// FBZ.view.$videoPlayer[0].removeEventListener('ended', FBZ.control.endVideo2, false);
 			// FBZ.view.$videoPlayer[0].removeEventListener('ended', FBZ.control.endVideo3, false);
-
-
 		},
 
 		audioEnded : function () {
