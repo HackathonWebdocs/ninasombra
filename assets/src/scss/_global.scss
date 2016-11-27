@@ -291,20 +291,18 @@ header {
 // 		margin: 0 0;
 // 	}
 
-
-#analiser { 
-	
-		display: inline-block; 
-		background: rgba(255,255,255,0.6); 
-		width: 100vw;
-		height:100vh;
-		top:0;
-		left: 0;
-		position: absolute;
+#analyser { 
+	opacity:0;
+	display: inline-block; 
+	// background: rgba(255,255,255,0.6); 
+	width: 75vw;
+	height:50vh;
+	top:50%;
+	left: 0;
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%) translateY(-50%);
 }
-
-
-
 
 
 .video-responsive {
@@ -346,9 +344,9 @@ header {
 #record { height: 15vh; }
 	#record.recording { 
 		background: red;
-		background: -webkit-radial-gradient(center, ellipse cover, #ff0000 0%,lightgrey 75%,lightgrey 100%,#7db9e8 100%); 
-		background: -moz-radial-gradient(center, ellipse cover, #ff0000 0%,lightgrey 75%,lightgrey 100%,#7db9e8 100%); 
-		background: radial-gradient(center, ellipse cover, #ff0000 0%,lightgrey 75%,lightgrey 100%,#7db9e8 100%); 
+		// background: -webkit-radial-gradient(center, ellipse cover, #ff0000 0%,lightgrey 75%,lightgrey 100%,#7db9e8 100%); 
+		// background: -moz-radial-gradient(center, ellipse cover, #ff0000 0%,lightgrey 75%,lightgrey 100%,#7db9e8 100%); 
+		// background: radial-gradient(center, ellipse cover, #ff0000 0%,lightgrey 75%,lightgrey 100%,#7db9e8 100%); 
 	}
 	#save, #save img { height: 10vh; }
 	#save { opacity: 0.25;}

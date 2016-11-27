@@ -62,7 +62,7 @@
 		$videoPlayer		:$("video"),
 		$headphones 		:$(".headphones-container"),
 		$logo 				:$(".logo-container"),
-		$analyzer			:$("#viz"),
+		$analyser			:$("#analyser"),
 		$whiteBg			:$(".white-bg"),
 
 	};
@@ -83,7 +83,6 @@
 
 		},
 
-
 		displayHeadphones: function () {
 
 			// FBZ.control.playSound(0,FBZ.control.audioEnded);
@@ -96,7 +95,7 @@
 		},
 		hideHeadphones : function () { 
 			FBZ.control.blurLong(FBZ.view.$headphones);
-			var tween2 = TweenLite.to(FBZ.view.$headphones, 3, {opacity:0, delay: 3, onComplete:FBZ.control.displayLogo})
+			var tween2 = TweenLite.to(FBZ.view.$headphones, 3, {opacity:0,scale:1.7, delay: 3, onComplete:FBZ.control.displayLogo})
 		},
 
 		displayLogo : function () {
@@ -109,20 +108,20 @@
 		hideLogo : function () { 
 
 			FBZ.control.blurLong(FBZ.view.$logo);
-			var tween = TweenLite.to(FBZ.view.$logo, 1, {opacity:0, delay: 3, onComplete:FBZ.control.displayActOneInstructions})
+			var tween = TweenLite.to(FBZ.view.$logo, 1, {opacity:0,scale:1.7, delay: 3, onComplete:FBZ.control.displayActOneInstructions})
 		},
-
 
 		displayActOneInstructions : function () {
 
 			FBZ.control.hide(FBZ.view.$logo);
 			FBZ.control.show(FBZ.view.$whiteBg);
-			FBZ.control.show(FBZ.view.$analyzer);
+			FBZ.control.show(FBZ.view.$analyser);
 			var tween = TweenLite.to(FBZ.view.$whiteBg, 1, {opacity:.6})
+			var tween = TweenLite.to(FBZ.view.$analyser, 1, {opacity:1})
+
 			// FBZ.control.playSound(0,FBZ.control.audioEnded);
 
 		},
-
 
 		playSound : function (index,endedFunction) {
 			FBZ.view.$audioPlayer.find("source").attr("src",FBZ.model.audiosBasePath+FBZ.model.audios[index]);
@@ -143,7 +142,6 @@
 			}
 
 			FBZ.view.$videoPlayer.attr("src",FBZ.model.videosBasePath+FBZ.model.videos[index]);
-
 		},
 
 		videoEnded : function () {
