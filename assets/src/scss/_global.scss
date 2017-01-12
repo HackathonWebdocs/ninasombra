@@ -16,6 +16,16 @@
 // $bp-huge              : 1600; // Set in px
 // footer 
 
+.test-bg {
+	// opacity:0;
+	background:transparent;
+	top:0;
+	left:0;
+	width:100vw;
+	height:100vh;
+	position:absolute;
+}
+
 .white-bg {
 	opacity:0;
 	background:#FFF;
@@ -291,6 +301,17 @@ header {
 // 		margin: 0 0;
 // 	}
 
+.clickerTesti {
+
+	position:absolute;
+	width:10vw;
+	height:10vh;
+	z-index:100;
+	background:#000;
+	opacity:0;
+}
+
+
 .clicker {
 
 	position:absolute;
@@ -298,7 +319,7 @@ header {
 	height:10vh;
 	z-index:100;
 	background:#000;
-	opacity:0.7;
+	opacity:0;
 }
 
 
@@ -366,7 +387,6 @@ header {
 
 
 
-
 	#viz {
 		height: 80%;
 		width: 100%;
@@ -378,9 +398,31 @@ header {
 	}
 
 
+#wavedisplay {
+	position:absolute;
+	width:100vw;
+	top:0;
+	z-index:-100;
+}
+
 .audioPlayer {
 	opacity:0;
 }
+
+// microphone 
+
+.microphone-container {
+	position:absolute;
+	top:50%;
+	left:50%;
+	transform:translateY(-50%) translateX(-50%);
+	margin: 0 auto;
+	opacity:0;
+	img {
+		width:20vw;
+	}
+}
+
 
 
 // headphones 

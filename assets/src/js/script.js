@@ -44,13 +44,15 @@
 		swapToMobileBreakpoint:420,
 		swapToTabletBreakpoint:1024,
 		audiosBasePath:"../assets/audio/",
-		audios:["narrador_1.mp3","narrador_2.mp3","narrador_3.mp3","narrador_4.mp3","narrador_5.mp3","narrador_6.mp3","narrador_7.mp3","narrador_8.mp3","narrador_9.mp3","narrador_10.mp3","narrador_11.mp3","click.mp3"],
+		audios:["narrador_1.mp3","narrador_2.mp3","narrador_3.mp3","narrador_4.mp3","narrador_5.mp3","narrador_6.mp3","narrador_7.mp3","narrador_8.mp3","narrador_9.mp3","narrador_10.mp3","narrador_11.mp3","click.mp3","Acto3_sonidorecorderinicio.mp3","Acto3_sonidorecorder_cierre.mp3"],
+		audiosTesti:["fabian_respuesta.mp3","mane_respuesta.mp3","maria_respuesta.mp3"],
 		videosBasePath:"../assets/video/",
-		// videos:["Intro_Ojocolores_01.mp4","Acto2_Elcolordelaceguera.mp4","Acto2_Queesunaimagen.mp4","Acto2_Comovenelmundo_03.mp4"],
-		videos:["Intro_Ojocolores_01.mp4","Intro_Ojocolores_01.mp4","Intro_Ojocolores_01.mp4","Intro_Ojocolores_01.mp4"],
+		videos:["Intro_Ojocolores_01.mp4","Acto2_Elcolordelaceguera.mp4","Acto2_Queesunaimagen.mp4","Acto2_Comovenelmundo.mp4","Acto3_Mapacornea.mp4"],
+		// videos:["Intro_Ojocolores_01.mp4","Intro_Ojocolores_01.mp4","Intro_Ojocolores_01.mp4","Intro_Ojocolores_01.mp4","Acto3_Mapacornea.mp4"],
 		playedQuestions : 0,
 		totalQuestions : 3,
 		selectedPath : 0,
+		ifAudioWasRecorded : false,
 	};
 
 	FBZ.view = {
@@ -65,6 +67,7 @@
 		$audioPlayer		:$(".audioPlayer"),
 		$videoPlayer		:$("video"),
 		$headphones 		:$(".headphones-container"),
+		$microphone 		:$(".microphone-container"),
 		$logo 				:$(".logo-container"),
 		$analyser			:$("#analyser"),
 		$whiteBg			:$(".white-bg"),
@@ -72,7 +75,8 @@
 		$c2					:$(".c2"),
 		$c3					:$(".c3"),
 		$clicker			:$(".clicker"),
-
+		$clickerTesti		:$(".clickerTesti"),
+		$wavedisplay		:$("#wavedisplay"),
 	};
 
 	FBZ.control = {
@@ -85,12 +89,12 @@
 			FBZ.control.onResizeStage();
 			FBZ.control.defineStage();
 			FBZ.control.resizeContentBlock();
+			// FBZ.control.displayAct3();
 			FBZ.control.displayHeadphones();
-			FBZ.control.playVideo(0,"loop");
 		},
 
 		displayHeadphones: function () {
-
+			FBZ.control.playVideo(0,"loop");
 			// FBZ.control.playSound(0,FBZ.control.audioEnded);
 			// FBZ.control.playVideo(1,FBZ.control.videoEnded);
 			// FBZ.control.playVideo(1,"loop");
@@ -117,6 +121,8 @@
 			FBZ.control.blurLong(FBZ.view.$logo);
 			var tween = TweenLite.to(FBZ.view.$logo, 1, {opacity:0,scale:1.7, delay: 3, onComplete:FBZ.control.displayVideo1Instructions})
 		},
+
+
 
 		displayVideo1Instructions : function () {
 
@@ -157,7 +163,6 @@
 
 			console.log("generateRandomClicker");
 			FBZ.control.show(FBZ.view.$clicker);
-
 			FBZ.control.randomlyPositionClicker();
 		
 			// FBZ.view.$c1.css("left", Math.round(Math.random*100)+"vw");
@@ -272,12 +277,134 @@
 			var tween = TweenLite.to(FBZ.view.$analyser, 1, {opacity:1,  onComplete:FBZ.control.questionsCompletionCheck});
 		},
 
-
-
 		displayAct3 : function () {
+
 			console.log("act 3");
+			FBZ.control.playSound(7,FBZ.control.displayAct3Instructions);
+			FBZ.control.playVideo(4,"loop");
+	},
+
+		displayAct3Instructions: function () {
+
+			var tween = TweenLite.to(FBZ.view.$whiteBg, 1, {opacity:0});
+			var tween2 = TweenLite.to(FBZ.view.$analyser, 2, {opacity:0,opacity:0 })
+			FBZ.view.$audioPlayer[0].removeEventListener("ended", FBZ.control.displayAct3Instructions);
+			FBZ.control.playSound(8,FBZ.control.audioEnded);
+
+			$(document).mousedown(function(e) {
+   				 clearTimeout(this.downTimer);
+  				  this.downTimer = setTimeout(function() {
+        	// do your thing 
+        			if(FBZ.model.ifAudioWasRecorded===false) {
+        			
+        				FBZ.control.startRecording();
+        			}
+ 			   }, 3000);
+			}).mouseup(function(e) {
+   			 clearTimeout(this.downTimer);
+   			 	if(FBZ.model.ifAudioWasRecorded===false) {
+   					FBZ.control.stopRecording();
+   					FBZ.model.ifAudioWasRecorded=true;
+   				}
+			});
+
+			FBZ.control.displayMicrophone();
+	
 		},
 
+		displayMicrophone: function () {
+
+			// FBZ.control.playSound(0,FBZ.control.audioEnded);
+			// FBZ.control.playVideo(1,FBZ.control.videoEnded);
+			// FBZ.control.playVideo(1,"loop");
+			FBZ.control.show(FBZ.view.$microphone);
+
+			var tween = TweenLite.to(FBZ.view.$microphone, 1, {opacity:1,scale:1.2 })
+		},
+		hideMicrophone : function () { 
+			FBZ.control.blurLong(FBZ.view.$microphone);
+			var tween2 = TweenLite.to(FBZ.view.$microphone, 2, {opacity:0,scale:1.7, delay: 3})
+		},
+
+		startRecording : function () {
+			
+			FBZ.control.playSound(12,FBZ.control.audioEnded);
+
+			FBZ.control.show(FBZ.view.$wavedisplay);
+			console.log("holded");
+			var tween = TweenLite.to(FBZ.view.$microphone, 0.5, {opacity:1,scale:1.4 , ease: Bounce.easeOut })
+			// toggleRecording(FBZ.view.$microphone[0]);
+
+					 if (!audioRecorder)
+            return;
+        // e.classList.add("recording");
+        audioRecorder.clear();
+        audioRecorder.record();
+		},
+
+		stopRecording : function () {
+
+			FBZ.view.$audioPlayer[0].removeEventListener("ended", FBZ.control.displayAct3Instructions);
+			audioRecorder.stop();
+			var tween = TweenLite.to(FBZ.view.$microphone, 0.8, {opacity:1,scale:.7 })
+			// e.classList.remove("recording");
+			// audioRecorder.getBuffers( gotBuffers );
+			FBZ.control.playSound(13,FBZ.control.graciasRecording);
+
+		},
+
+		graciasRecording : function () {
+			FBZ.view.$audioPlayer[0].removeEventListener("ended", FBZ.control.graciasRecording);
+
+			FBZ.control.playSound(9,FBZ.control.testimonios);
+			FBZ.control.hideMicrophone();
+		}, 
+
+		testimonios : function () { 
+			FBZ.view.$audioPlayer[0].removeEventListener("ended", FBZ.control.testimonios);
+			FBZ.control.playSound(10,FBZ.control.populateTestimonios);
+		}, 
+
+
+		populateTestimonios : function () {
+
+			FBZ.view.$audioPlayer[0].removeEventListener("ended", FBZ.control.populateTestimonios);
+			FBZ.control.show(FBZ.view.$clickerTesti);
+			FBZ.control.show($(".test-bg"));
+
+			FBZ.control.randomlyPositionTestimonios();
+		},
+
+		randomlyPositionTestimonios : function () {
+
+			console.log("randomlyPositionTestimonios");
+
+			FBZ.view.$clickerTesti.each(function( index, element ) {
+    
+			$(element).css("top", Math.round(Math.random()*90)+"%");
+			$(element).css("left", Math.round(Math.random()*90)+"%");
+
+    // element == this
+   			});
+
+			FBZ.view.$clickerTesti.on("mouseover",FBZ.control.onClickerOverTesti); 
+
+		},
+
+
+	onClickerOverTesti : function (e) {
+
+			console.log("clicOverTesti",FBZ.model.selectedPath);
+			FBZ.control.playSound(11,FBZ.control.audioEnded);
+
+			setTimeout(function(){ 
+
+				FBZ.model.selectedPath  = Number( e.currentTarget.getAttribute("data"));
+				FBZ.view.$clicker.off("mouseover",FBZ.control.onClickerOver); 
+				FBZ.control.playSoundTesti(FBZ.model.selectedPath-1,FBZ.control.audioEnded);
+			
+					}, 1000);
+		},
 /// utility
 		playSound : function (index,endedFunction) {
 
@@ -294,6 +421,23 @@
 			FBZ.view.$audioPlayer[0].play();
 			FBZ.view.$audioPlayer[0].addEventListener("ended", endedFunction);
 		},
+
+		playSoundTesti : function (index,endedFunction) {
+
+			var old_element = FBZ.view.$audioPlayer[0];
+			var new_element = old_element.cloneNode(true);
+			FBZ.view.$audioPlayer.replaceWith(new_element);
+
+		 // old_element.parentNode.replaceChild(new_element, old_element);
+			// FBZ.view.$audioPlayer.off();
+			console.log("playSound", index, endedFunction.name);
+
+			FBZ.view.$audioPlayer.attr("src",FBZ.model.audiosBasePath+FBZ.model.audiosTesti[index]);
+			// console.log("play Sound: ",FBZ.view.$audioPlayer,FBZ.model.audiosBasePath+FBZ.model.audios[index]);
+			FBZ.view.$audioPlayer[0].play();
+			FBZ.view.$audioPlayer[0].addEventListener("ended", endedFunction);
+		},
+
 
 		pauseSound : function () {
 
@@ -440,8 +584,6 @@
 				el.removeClass("is-blurring-out");
 			}, 5001);
 		},
-
-
 
 
 		fadeHideLong : function (el) { 
@@ -638,4 +780,8 @@ Function.prototype.debounce = function (milliseconds) {
         timer = setTimeout(complete, wait);
     };
 };
+
+
+// mouse timer 
+
 

@@ -12,6 +12,7 @@ assets/temp/**/*
 *.psd
 *.psb
 *.tiff
+*.mp4
 
 # CSS & Sass
 # css/*.css
